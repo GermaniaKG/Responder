@@ -14,7 +14,7 @@ class JsonResponder implements ResponderInterface
     /**
      * @var int
      */
-    public $json_options = \JSON_PRETTY_PRINT;
+    public $json_options = 0;
 
 
     /**
@@ -29,13 +29,10 @@ class JsonResponder implements ResponderInterface
      * @param int                      $json_options
      * @param ResponseFactoryInterface $response_factory
      */
-    public function __construct(int $json_options = null, ResponseFactoryInterface $response_factory = null )
+    public function __construct(int $json_options = 0, ResponseFactoryInterface $response_factory = null )
     {
         $this->setResponseFactory($response_factory ?: new ResponseFactory);
-
-        if (!is_null($json_options)) {
-            $this->setJsonOptions($json_options);
-        }
+        $this->setJsonOptions($json_options);
     }
 
 
@@ -68,7 +65,7 @@ class JsonResponder implements ResponderInterface
     /**
      * @inheritDoc
      */
-    public function createResponse( $thingy) : ResponseInterface
+    public function createResponse( $thingy, int $status = 200) : ResponseInterface
     {
         if (is_resource($thingy)) {
             $msg = sprintf("Can't work with resource types.");
@@ -81,13 +78,18 @@ class JsonResponder implements ResponderInterface
             throw new ResponderInvalidArgumentException($msg);
         }
 
-        $json_thingy = json_encode($thingy, $this->json_options);
+        try {
+            $json_thingy = json_encode($thingy, $this->json_options);
 
-        $response = $this->getResponseFactory()->createResponse()
-                                               ->withHeader('Content-type', $this->response_content_type)
-                                               ->withStatus(200);
+            $response = $this->getResponseFactory()->createResponse()
+                                                   ->withHeader('Content-type', $this->response_content_type)
+                                                   ->withStatus($status);
 
-        $response->getBody()->write($json_thingy);
+            $response->getBody()->write($json_thingy);
+        }
+        catch (\Throwable $e) {
+            throw new ResponderRuntimeException("Caught exception during response creation", 1, $e);
+        }
 
         return $response;
     }

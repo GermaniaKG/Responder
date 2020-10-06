@@ -39,12 +39,13 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideJsonSerializableData
      * @depends testInstantiation
      */
-    public function testResponseCreation($thingy, $debug, $sut )
+    public function testResponseCreation($thingy, $debug, $status, $sut )
     {
         $sut->setDebug($debug);
-        $response = $sut->createResponse( $thingy );
+        $response = $sut->createResponse( $thingy, $status );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals($response->getStatusCode(), $status);
 
         $response_body = (string) $response->getBody();
         $response_body_decoded = json_decode($response_body, "force_array");
@@ -58,10 +59,10 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
 
         $E1 = new \RuntimeException("Boo!");
         return array(
-            [ $E1, true],
-            [ new \Exception("Outer", 0, $E1), true ],
-            [ $E1, false],
-            [ new \Exception("Outer", 0, $E1), false ],
+            [ $E1, true, 500],
+            [ new \Exception("Outer", 0, $E1), true, 500 ],
+            [ $E1, false, 500],
+            [ new \Exception("Outer", 0, $E1), false, 501 ],
         );
     }
 
