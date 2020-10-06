@@ -18,7 +18,7 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
 
     public function testInstantiation()
     {
-        $options = null;
+        $options = \JSON_PRETTY_PRINT;
 
         $response_factory_mock = $this->prophesize( ResponseFactoryInterface::class );
         $response_factory = $response_factory_mock->reveal();

@@ -14,7 +14,7 @@ class JsonResponder implements ResponderInterface
     /**
      * @var int
      */
-    public $json_options = \JSON_PRETTY_PRINT;
+    public $json_options = 0;
 
 
     /**
@@ -29,13 +29,10 @@ class JsonResponder implements ResponderInterface
      * @param int                      $json_options
      * @param ResponseFactoryInterface $response_factory
      */
-    public function __construct(int $json_options = null, ResponseFactoryInterface $response_factory = null )
+    public function __construct(int $json_options = 0, ResponseFactoryInterface $response_factory = null )
     {
         $this->setResponseFactory($response_factory ?: new ResponseFactory);
-
-        if (!is_null($json_options)) {
-            $this->setJsonOptions($json_options);
-        }
+        $this->setJsonOptions($json_options);
     }
 
 
