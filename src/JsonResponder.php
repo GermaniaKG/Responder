@@ -68,7 +68,7 @@ class JsonResponder implements ResponderInterface
     /**
      * @inheritDoc
      */
-    public function createResponse( $thingy) : ResponseInterface
+    public function createResponse( $thingy, int $status = 200) : ResponseInterface
     {
         if (is_resource($thingy)) {
             $msg = sprintf("Can't work with resource types.");
@@ -85,7 +85,7 @@ class JsonResponder implements ResponderInterface
 
         $response = $this->getResponseFactory()->createResponse()
                                                ->withHeader('Content-type', $this->response_content_type)
-                                               ->withStatus(200);
+                                               ->withStatus($status);
 
         $response->getBody()->write($json_thingy);
 

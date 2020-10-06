@@ -34,22 +34,23 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideJsonSerializableData
      * @depends testInstantiation
      */
-    public function testResponseCreation($thingy, $sut )
+    public function testResponseCreation($thingy, $status, $sut )
     {
         $sut->setResponseFactory( new ResponseFactory);
 
-        $response = $sut->createResponse( $thingy );
+        $response = $sut->createResponse( $thingy, $status );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals($response->getStatusCode(), $status);
     }
 
     public function provideJsonSerializableData()
     {
         return array(
-            [ "foo" ],
-            [ array("foo" => "bar") ],
-            [ false ],
-            [ true ]
+            [ "foo", 200 ],
+            [ array("foo" => "bar"), 301 ],
+            [ false, 400 ],
+            [ true, 200 ]
         );
     }
 
