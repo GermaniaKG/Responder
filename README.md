@@ -2,6 +2,14 @@
 
 
 
+## Installation
+
+```bash
+$ composer require germania-kg/responder
+```
+
+
+
 ## Development
 
 ```bash
