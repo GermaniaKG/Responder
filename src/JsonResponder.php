@@ -78,13 +78,18 @@ class JsonResponder implements ResponderInterface
             throw new ResponderInvalidArgumentException($msg);
         }
 
-        $json_thingy = json_encode($thingy, $this->json_options);
+        try {
+            $json_thingy = json_encode($thingy, $this->json_options);
 
-        $response = $this->getResponseFactory()->createResponse()
-                                               ->withHeader('Content-type', $this->response_content_type)
-                                               ->withStatus($status);
+            $response = $this->getResponseFactory()->createResponse()
+                                                   ->withHeader('Content-type', $this->response_content_type)
+                                                   ->withStatus($status);
 
-        $response->getBody()->write($json_thingy);
+            $response->getBody()->write($json_thingy);
+        }
+        catch (\Throwable $e) {
+            throw new ResponderRuntimeException("Caught exception during response creation", 1, $e);
+        }
 
         return $response;
     }

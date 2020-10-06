@@ -102,10 +102,15 @@ class TwigResponder implements ResponderInterface
             throw new ResponderRuntimeException($msg);
         }
 
-        $website_html = $this->twig->render($template, $context);
+        try {
+            $website_html = $this->twig->render($template, $context);
 
-        $response = $this->getResponseFactory()->createResponse();
-        $response->getBody()->write($website_html);
+            $response = $this->getResponseFactory()->createResponse();
+            $response->getBody()->write($website_html);
+        }
+        catch (\Throwable $e) {
+            throw new ResponderRuntimeException("Caught exception during response creation", 1, $e);
+        }
 
         return $response;
     }
