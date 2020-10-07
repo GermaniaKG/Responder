@@ -60,7 +60,8 @@ class ErrorResponder extends ResponderDecoratorAbstract implements ResponderInte
     {
         $result = array(
             'type'     => get_class($e),
-            'message'  => $e->getMessage()
+            'message'  => $e->getMessage(),
+            'code'     => $e->getCode()
         );
         if ($this->debug) {
             $result['location'] = sprintf("%s:%s", $e->getFile(), $e->getLine());
