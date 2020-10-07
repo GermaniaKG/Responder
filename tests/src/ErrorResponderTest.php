@@ -21,7 +21,7 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
     {
         parent::setUp();
 
-        $this->inner_responder = new JsonResponder();
+        $this->inner_responder = new JsonResponder(\JSON_PRETTY_PRINT);
 
     }
 
@@ -48,8 +48,10 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($response->getStatusCode(), $status);
 
         $response_body = (string) $response->getBody();
-        $response_body_decoded = json_decode($response_body, "force_array");
 
+        print_r($response_body); echo PHP_EOL;
+
+        $response_body_decoded = json_decode($response_body, "force_array");
         $this->assertIsArray($response_body_decoded['errors']);
     }
 
