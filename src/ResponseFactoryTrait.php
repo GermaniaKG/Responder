@@ -15,6 +15,8 @@ trait ResponseFactoryTrait
 
 
     /**
+     * Sets the ResponseFactory.
+     *
      * @param ResponseFactoryInterface $response_factory
      */
     public function setResponseFactory(ResponseFactoryInterface $response_factory )
@@ -24,6 +26,12 @@ trait ResponseFactoryTrait
     }
 
 
+
+    /**
+     * Returns the ResponseFactory or null.
+     *
+     * @return ResponseFactoryInterface|null
+     */
     public function getResponseFactory() : ?ResponseFactoryInterface
     {
         return $this->response_factory;
