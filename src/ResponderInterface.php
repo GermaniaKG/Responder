@@ -10,7 +10,7 @@ interface ResponderInterface
     /**
      * Creates a response from the given data.
      *
-     * @param  mxied $result
+     * @param  mixed $result
      * @return ResponseInterface
      *
      * @throws ResponderExceptionInterface
