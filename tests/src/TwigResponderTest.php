@@ -24,6 +24,7 @@ class TwigResponderTest extends \PHPUnit\Framework\TestCase
 
         $sut = new TwigResponder($twig, "template");
         $this->assertInstanceOf(ResponderInterface::class, $sut);
+        $this->assertIsCallable( $sut);
 
         return $sut;
     }
