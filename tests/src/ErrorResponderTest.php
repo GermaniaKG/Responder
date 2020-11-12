@@ -30,6 +30,7 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
         $debug = false;
         $sut = new ErrorResponder($debug, $this->inner_responder);
         $this->assertInstanceOf(ResponderInterface::class, $sut);
+        $this->assertIsCallable( $sut);
 
         return $sut;
     }

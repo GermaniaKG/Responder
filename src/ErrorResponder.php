@@ -33,6 +33,15 @@ class ErrorResponder extends ResponderDecoratorAbstract implements ResponderInte
     /**
      * @inheritDoc
      */
+    public function __invoke( $e, int $status = 500 ) : ResponseInterface
+    {
+        return $this->createResponse( $e, $status);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function createResponse( $e, int $status = 500 ) : ResponseInterface
     {
         if (!$e instanceOf \Throwable) {

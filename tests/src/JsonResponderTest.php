@@ -25,6 +25,7 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
 
         $sut = new JsonResponder($options, $response_factory);
         $this->assertInstanceOf(ResponderInterface::class, $sut);
+        $this->assertIsCallable( $sut);
 
         return $sut;
     }

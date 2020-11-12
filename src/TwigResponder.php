@@ -30,6 +30,12 @@ class TwigResponder implements ResponderInterface
     public $default_context = array();
 
 
+    /**
+     * @var string|bool
+     */
+    public $default_template = false;
+
+
 
     /**
      * @param TwigEnvironment               $twig             Twig environment
@@ -58,6 +64,26 @@ class TwigResponder implements ResponderInterface
 
 
     /**
+     * @return mixed
+     */
+    public function getDefaultTemplate( )
+    {
+        return $this->default_template;
+    }
+
+
+    /**
+     * @param mixed $default_template
+     */
+    public function setDefaultTemplate( $default_template )
+    {
+        $this->default_template = $default_template;
+        return $this;
+    }
+
+
+
+    /**
      * @param array $default_context
      */
     public function setDefaultContext( array $default_context )
@@ -74,6 +100,17 @@ class TwigResponder implements ResponderInterface
     {
         $this->template_field = $field;
         return $this;
+    }
+
+
+
+
+    /**
+     * @inheritDoc
+     */
+    public function __invoke( $context ) : ResponseInterface
+    {
+        return $this->createResponse( $context );
     }
 
 
@@ -95,7 +132,7 @@ class TwigResponder implements ResponderInterface
 
         // Merge with defaults
         $context = array_merge($this->default_context, $context);
-        $template = $context[ $this->template_field ] ?? false;
+        $template = $context[ $this->template_field ] ?? $this->getDefaultTemplate();
 
         if (!$template) {
             $msg = sprintf("Expected '%s' element.", $this->template_field);

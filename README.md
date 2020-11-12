@@ -65,6 +65,9 @@ $response = $responder->createResponse($data);
 $responder->setTwig( $twig );
 $responder->setTemplateField('template');
 $responder->setDefaultContext( array('another' => 'data') );
+
+# Fallback when context lacks 'template' element
+$responder->setDefaultTemplate('website.tpl');
 ```
 
 

@@ -16,4 +16,12 @@ interface ResponderInterface
      * @throws ResponderExceptionInterface
      */
     public function createResponse( $result ) : ResponseInterface;
+
+
+    /**
+     * Callable alias for createResponse()
+     *
+     * @inheritDoc
+     */
+    public function __invoke( $result ) : ResponseInterface;
 }
