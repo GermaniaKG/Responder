@@ -6,6 +6,13 @@
 
 # Germania KG · Responder
 
+[![Packagist](https://img.shields.io/packagist/v/germania-kg/responder.svg?style=flat)](https://packagist.org/packages/germania-kg/responder)
+[![PHP version](https://img.shields.io/packagist/php-v/germania-kg/responder.svg)](https://packagist.org/packages/germania-kg/responder)
+[![Build Status](https://img.shields.io/travis/GermaniaKG/Responder.svg?label=Travis%20CI)](https://travis-ci.org/GermaniaKG/Responder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/GermaniaKG/Responder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Responder/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/GermaniaKG/Responder/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Responder/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/GermaniaKG/Responder/badges/build.png?b=master)](https://scrutinizer-ci.com/g/GermaniaKG/Responder/build-status/master)
+
 
 
 ## Installation
