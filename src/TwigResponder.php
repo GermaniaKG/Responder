@@ -126,7 +126,12 @@ class TwigResponder implements ResponderInterface
         if ($context instanceof \ArrayObject):
             $context = $context->getArrayCopy();
         elseif (!is_array($context)):
-            throw new ResponderInvalidArgumentException("Expected Array or ArrayObject");
+            $context_type = is_object($context) ? get_class($context) : gettype($context);
+            $msg = sprintf(
+                "Expected Array or ArrayObject, got '%s'.",
+                $context_type
+            );
+            throw new ResponderInvalidArgumentException($msg);
         endif;
 
 
