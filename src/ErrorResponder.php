@@ -10,10 +10,10 @@ class ErrorResponder extends ResponderDecoratorAbstract implements ResponderInte
 
 
     /**
-     * @param bool|boolean       $debug     Turn on debug mode
+     * @param bool|boolean       $debug     Whether to turn on debug mode
      * @param ResponderInterface $responder Inner ResponderInterface
      */
-    public function __construct( bool $debug = false, ResponderInterface $responder )
+    public function __construct( bool $debug, ResponderInterface $responder )
     {
         parent::__construct($responder);
         $this->setDebug($debug);
