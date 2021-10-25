@@ -62,10 +62,10 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
     public function provideJsonSerializableData()
     {
         return array(
-            [ "foo", 200 ],
-            [ array("foo" => "bar"), 301 ],
-            [ false, 400 ],
-            [ true, 200 ]
+            'String value with status 200' => [ "foo", 200 ],
+            'Array with status 301'        => [ array("foo"   => "bar"), 301 ],
+            'Boolean FALSE status 400'     => [ false, 400 ],
+            'Boolean TRUE with status 200' => [ true, 200 ]
         );
     }
 
@@ -87,8 +87,8 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
     public function provideInvalidData()
     {
         return array(
-            [ tmpfile() ],
-            [ new \StdClass ],
+            'resource type'   => [ tmpfile() ],
+            'StdClass object' => [ new \StdClass ],
         );
     }
 

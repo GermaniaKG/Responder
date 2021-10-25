@@ -62,10 +62,10 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
 
         $E1 = new \RuntimeException("Boo!");
         return array(
-            [ $E1, true, 500],
-            [ new \Exception("Outer", 0, $E1), true, 500 ],
-            [ $E1, false, 500],
-            [ new \Exception("Outer", 0, $E1), false, 501 ],
+            'RuntimeException, debug ON and status 500' => [ $E1, true, 500],
+            'Exception with previous RuntimeException, debug ON and status 500' => [ new \Exception("Outer", 0, $E1), true, 500 ],
+            'RuntimeException, debug OFF and status 500' => [ $E1, false, 500],
+            'Exception with previous RuntimeException, debug OFF and status 501' => [ new \Exception("Outer", 0, $E1), false, 501 ],
         );
     }
 
@@ -85,7 +85,7 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
     public function provideInvalidData()
     {
         return array(
-            [ "foo" ]
+            'Just a string' => [ "foo" ]
         );
     }
 

@@ -62,8 +62,8 @@ class TwigResponderTest extends \PHPUnit\Framework\TestCase
     public function provideJsonSerializableData()
     {
         return array(
-            [ array("foo" => "bar") ],
-            [ new \ArrayObject(array("foo" => "bar")) ]
+            'Plain array' => [ array("foo" => "bar") ],
+            'ArrayObject' => [ new \ArrayObject(array("foo" => "bar")) ]
         );
     }
 
@@ -85,8 +85,8 @@ class TwigResponderTest extends \PHPUnit\Framework\TestCase
     public function provideInvalidData()
     {
         return array(
-            [ tmpfile() ],
-            [ new \StdClass ],
+            'resource type'   => [ tmpfile() ],
+            'StdClass object' => [ new \StdClass ],
         );
     }
 
