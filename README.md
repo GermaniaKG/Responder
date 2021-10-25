@@ -192,6 +192,17 @@ $responder->setCallback(function($item) { return $item; });
 $responder->setResponder($other_responder);
 ```
 
+## NoContentResponder
+
+Produced empty responses with 204 status.
+
+```php
+<?php
+use Germania\Responder\NoContentResponder;
+
+$responder = new NoContentResponder();
+```
+
 
 
 ------
