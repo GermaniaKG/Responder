@@ -1,8 +1,6 @@
 <?php
 namespace Germania\Responder;
 
-use Slim\Psr7\Factory\ResponseFactory;
-
 trait ResponderTrait
 {
 

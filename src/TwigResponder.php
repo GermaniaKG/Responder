@@ -3,7 +3,6 @@ namespace Germania\Responder;
 
 use Twig\Environment as TwigEnvironment;
 
-use Slim\Psr7\Factory\ResponseFactory;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -48,7 +47,9 @@ class TwigResponder implements ResponderInterface
         $this->setTwig($twig);
         $this->setTemplateField($template_field);
         $this->setDefaultContext($default_context);
-        $this->setResponseFactory($response_factory ?: new ResponseFactory);
+        if ($response_factory) {
+            $this->setResponseFactory($response_factory);
+        }
     }
 
 

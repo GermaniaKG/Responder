@@ -16,32 +16,54 @@
     },
     "require": {
         "php": "^7.1|^8.0",
-        "slim/psr7": "^1.2",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "nyholm/psr7": "^1.4"
     },
 
 
     "autoload-dev": {
-          "psr-4": {
-            "tests\\": "tests/src"
-          }
+        "psr-4": {
+            "tests\\": [
+                "tests",
+                "tests/unit"
+            ]
+        }
     },
 
     "require-dev": {
-        "phpunit/phpunit": "^9.0",
-        "phpspec/prophecy-phpunit": "^2.0",
-        "php-coveralls/php-coveralls": "^2.0",
-        "friendsofphp/php-cs-fixer": "^2.0",
-        "twig/twig": "^3.0"
+    	  "twig/twig": "^3.0",
+
+        "phpunit/phpunit"             : "^9.0",
+        "phpspec/prophecy-phpunit"    : "^2.0",
+        "php-coveralls/php-coveralls" : "^2.0",
+        "friendsofphp/php-cs-fixer"   : "^2.0|^3.0",
+        "spatie/phpunit-watcher"      : "^1.23",
+        "phpstan/phpstan"             : "^0.12",
+        "roave/security-advisories"   : "dev-latest",
+        "tomkyle/mock-psr"            : "^1.2",
+        "overtrue/phplint"            : "^3.0"
     },
     "scripts": {
-        "phpcs":       "php-cs-fixer fix --verbose --diff --dry-run src/",
-        "phpcs-apply": "php-cs-fixer fix --verbose --diff src/",
-        "phpunit": "phpunit --colors=auto --coverage-text",
+        "lint"        : "phplint ./ --exclude=vendor --no-interaction --no-cache --ansi",
+
+        "phpcs"       : "php-cs-fixer fix --verbose --diff --dry-run src/",
+        "phpcs-apply" : "php-cs-fixer fix --verbose --diff src/",
+
+        "phpunit"     : "phpunit --testdox",
+
+        "phpstan"     : "phpstan analyse src tests --level 2",
+
+        "watch"       : "phpunit-watcher watch",
+
+        "test:all": [
+            "@lint",
+            "@test"
+        ],
+
         "test": [
-            "@phpcs",
-            "@phpunit"
-        ]
+            "@test:unit"
+        ],
+        "test:unit"        : [ "@phpunit --testsuite unit" ]
     }
 
 }

@@ -1,29 +1,34 @@
 <?php
 namespace tests;
 
+use Germania\Responder\ErrorResponder;
 use Germania\Responder\JsonResponder;
 use Germania\Responder\ResponderInterface;
 use Germania\Responder\ResponderInvalidArgumentException;
 use Germania\Responder\ResponderExceptionInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Psr7\Factory\ResponseFactory;
 
 use Prophecy\PhpUnit\ProphecyTrait;
 
-class JsonResponderTest extends \PHPUnit\Framework\TestCase
+
+class ErrorResponderTest extends \PHPUnit\Framework\TestCase
 {
     use ProphecyTrait;
 
+    public $inner_responder;
+
+    public function setUp() : void
+    {
+        parent::setUp();
+
+        $this->inner_responder = new JsonResponder(\JSON_PRETTY_PRINT);
+
+    }
 
     public function testInstantiation()
     {
-        $options = \JSON_PRETTY_PRINT;
-
-        $response_factory_mock = $this->prophesize( ResponseFactoryInterface::class );
-        $response_factory = $response_factory_mock->reveal();
-
-        $sut = new JsonResponder($options, $response_factory);
+        $debug = false;
+        $sut = new ErrorResponder($debug, $this->inner_responder);
         $this->assertInstanceOf(ResponderInterface::class, $sut);
         $this->assertIsCallable( $sut);
 
@@ -35,23 +40,32 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
      * @dataProvider provideJsonSerializableData
      * @depends testInstantiation
      */
-    public function testResponseCreation($thingy, $status, $sut )
+    public function testResponseCreation($thingy, $debug, $status, $sut )
     {
-        $sut->setResponseFactory( new ResponseFactory);
-
+        $sut->setDebug($debug);
         $response = $sut->createResponse( $thingy, $status );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals($response->getStatusCode(), $status);
+
+        $response_body = (string) $response->getBody();
+
+        print_r($response_body); echo PHP_EOL;
+
+        $response_body_decoded = json_decode($response_body, "force_array");
+        $this->assertIsArray($response_body_decoded['errors']);
     }
+
 
     public function provideJsonSerializableData()
     {
+
+        $E1 = new \RuntimeException("Boo!");
         return array(
-            [ "foo", 200 ],
-            [ array("foo" => "bar"), 301 ],
-            [ false, 400 ],
-            [ true, 200 ]
+            'RuntimeException, debug ON and status 500' => [ $E1, true, 500],
+            'Exception with previous RuntimeException, debug ON and status 500' => [ new \Exception("Outer", 0, $E1), true, 500 ],
+            'RuntimeException, debug OFF and status 500' => [ $E1, false, 500],
+            'Exception with previous RuntimeException, debug OFF and status 501' => [ new \Exception("Outer", 0, $E1), false, 501 ],
         );
     }
 
@@ -63,8 +77,6 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
      */
     public function testExceptions($thingy, $sut )
     {
-        $sut->setResponseFactory( new ResponseFactory);
-
         $this->expectException(ResponderExceptionInterface::class);
         $this->expectException(ResponderInvalidArgumentException::class);
         $sut->createResponse( $thingy );
@@ -73,8 +85,7 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
     public function provideInvalidData()
     {
         return array(
-            [ tmpfile() ],
-            [ new \StdClass ],
+            'Just a string' => [ "foo" ]
         );
     }
 
