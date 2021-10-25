@@ -21,5 +21,11 @@ abstract class ResponderDecoratorAbstract implements ResponderInterface
     /**
      * @inheritDoc
      */
+    abstract public function __invoke( $result ) : ResponseInterface;
+
+
+    /**
+     * @inheritDoc
+     */
     abstract public function createResponse( $result ) : ResponseInterface;
 }

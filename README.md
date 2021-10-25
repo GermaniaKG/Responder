@@ -168,6 +168,32 @@ catch(ResponderExceptionInterface $e) {
 
 
 
+## CallbackResponder
+
+This class applies a *callback* to the given data before passing to any *inner responder* which must be instance of *ResponderInterface*.
+
+```php
+<?php
+use Germania\Responder\CallbackResponder;
+use Germania\Responder\JsonResponder;
+
+// Do-nothing callback for demonstration purposes
+$callback = function($item) { return $item; };
+// Any kind of ResponderInterface will do
+$inner = new JsonResponder();
+
+$responder = new CallbackResponder($callback, $inner);
+```
+
+### Configuration
+
+```php
+$responder->setCallback(function($item) { return $item; });
+$responder->setResponder($other_responder);
+```
+
+
+
 ------
 
 
