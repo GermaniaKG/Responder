@@ -20,15 +20,30 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
     {
         $options = \JSON_PRETTY_PRINT;
 
-        $response_factory_mock = $this->prophesize( ResponseFactoryInterface::class );
-        $response_factory = $response_factory_mock->reveal();
-
-        $sut = new JsonResponder($options, $response_factory);
+        $sut = new JsonResponder($options);
         $this->assertInstanceOf(ResponderInterface::class, $sut);
         $this->assertIsCallable( $sut);
 
         return $sut;
     }
+
+
+    /**
+     * @depends testInstantiation
+     */
+    public function testResponseFactoryInterceptor( $sut )
+    {
+        $response_factory_mock = $this->prophesize( ResponseFactoryInterface::class );
+        $response_factory = $response_factory_mock->reveal();
+
+        $fluid = $sut->setResponseFactory( $response_factory);
+        $this->assertSame($fluid, $sut);
+
+        return $sut;
+    }
+
+
+
 
 
     /**
@@ -38,7 +53,6 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
     public function testResponseCreation($thingy, $status, $sut )
     {
         $sut->setResponseFactory( new Nyholm\Psr7\Factory\Psr17Factory);
-
         $response = $sut->createResponse( $thingy, $status );
 
         $this->assertInstanceOf(ResponseInterface::class, $response);

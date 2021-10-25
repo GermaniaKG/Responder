@@ -2,13 +2,14 @@
 namespace Germania\Responder;
 
 use Psr\Http\Message\ResponseFactoryInterface;
+use Nyholm;
 
 trait ResponseFactoryTrait
 {
 
 
     /**
-     * @var ResponseFactory
+     * @var null|ResponseFactory
      */
     public $response_factory;
 
@@ -28,12 +29,17 @@ trait ResponseFactoryTrait
 
 
     /**
-     * Returns the ResponseFactory or null.
+     * Returns the ResponseFactory.
      *
-     * @return ResponseFactoryInterface|null
+     * If nt set otherwise, the ResponseFactory is `Nyholm\Psr7\Factory\Psr17Factory`
+     *
+     * @return ResponseFactoryInterface
      */
-    public function getResponseFactory() : ?ResponseFactoryInterface
+    public function getResponseFactory() : ResponseFactoryInterface
     {
+        if (!$this->response_factory) {
+            $this->setResponseFactory( new Nyholm\Psr7\Factory\Psr17Factory );
+        }
         return $this->response_factory;
     }
 

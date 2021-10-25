@@ -339,7 +339,7 @@ public function setResponder( ResponderInterface $responder );
 
 ### ResponseFactoryTrait
 
-*TwigResponder* and *JsonResponder* use the `Germania\Responder\ResponseFactoryTrait`. Per default they use the Response factory from **[yholm/psr7](https://packagist.org/packages/nyholm/psr7).**
+*TwigResponder* and *JsonResponder* use the `Germania\Responder\ResponseFactoryTrait`. Per default they use the Response factory from **[nyholm/psr7](https://packagist.org/packages/nyholm/psr7).**
 
 ```php
 // @var ResponseFactory
@@ -349,8 +349,8 @@ public $response_factory;
 // @return static
 public function setResponseFactory(ResponseFactoryInterface $response_factory ) : static
 
-// @return ResponseFactoryInterface|null  
-public function getResponseFactory() : ?ResponseFactoryInterface;
+// @return ResponseFactoryInterface  
+public function getResponseFactory() : ResponseFactoryInterface;
 ```
 
 
