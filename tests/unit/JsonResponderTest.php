@@ -7,7 +7,7 @@ use Germania\Responder\ResponderInvalidArgumentException;
 use Germania\Responder\ResponderExceptionInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Slim\Psr7\Factory\ResponseFactory;
+use Nyholm;
 
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -37,7 +37,7 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
      */
     public function testResponseCreation($thingy, $status, $sut )
     {
-        $sut->setResponseFactory( new ResponseFactory);
+        $sut->setResponseFactory( new Nyholm\Psr7\Factory\Psr17Factory);
 
         $response = $sut->createResponse( $thingy, $status );
 
@@ -63,7 +63,7 @@ class JsonResponderTest extends \PHPUnit\Framework\TestCase
      */
     public function testExceptions($thingy, $sut )
     {
-        $sut->setResponseFactory( new ResponseFactory);
+        $sut->setResponseFactory( new Nyholm\Psr7\Factory\Psr17Factory);
 
         $this->expectException(ResponderExceptionInterface::class);
         $this->expectException(ResponderInvalidArgumentException::class);

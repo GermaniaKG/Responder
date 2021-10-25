@@ -3,7 +3,7 @@ namespace Germania\Responder;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
-use Slim\Psr7\Factory\ResponseFactory;
+use Nyholm;
 
 class JsonResponder implements ResponderInterface
 {
@@ -31,7 +31,7 @@ class JsonResponder implements ResponderInterface
      */
     public function __construct(int $json_options = 0, ResponseFactoryInterface $response_factory = null )
     {
-        $this->setResponseFactory($response_factory ?: new ResponseFactory);
+        $this->setResponseFactory($response_factory ?: new Nyholm\Psr7\Factory\Psr17Factory);
         $this->setJsonOptions($json_options);
     }
 

@@ -16,8 +16,8 @@
     },
     "require": {
         "php": "^7.1|^8.0",
-        "slim/psr7": "^1.2",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "nyholm/psr7": "^1.4"
     },
 
 
