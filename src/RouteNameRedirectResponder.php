@@ -74,6 +74,11 @@ class RouteNameRedirectResponder implements ResponderInterface
         endif;
 
         $redirect_url = ($this->uri_creator)($this->route_name, $data);
+
+        if ($redirect_url instanceOf \Psr\Http\Message\UriInterface) {
+            $redirect_url = $redirect_url->__toString();
+        }
+
         $status = $status ?: $this->default_status;
 
         return $this->getResponseFactory()->createResponse()
