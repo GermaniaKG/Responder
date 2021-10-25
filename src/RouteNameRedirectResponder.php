@@ -17,10 +17,13 @@ class RouteNameRedirectResponder implements ResponderInterface
 
     /**
      * @param string $route_name
+     * @param callable $uri_creator,
      * @param ResponseFactoryInterface|null $response_factory Optional: PSR-17 Response Factory
      */
     public function __construct(string $route_name, callable $uri_creator, ResponseFactoryInterface $response_factory = null )
     {
+        $this->setRouteName($route_name);
+        $this->setUriCreator($uri_creator);
         if ($response_factory) {
             $this->setResponseFactory($response_factory);
         }
