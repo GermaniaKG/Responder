@@ -43,8 +43,12 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
     public function testResponseCreation($thingy, $debug, $status, $sut )
     {
         $sut->setDebug($debug);
-        $response = $sut->createResponse( $thingy, $status );
 
+        $response = $sut( $thingy, $status );
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals($response->getStatusCode(), $status);
+
+        $response = $sut->createResponse( $thingy, $status );
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEquals($response->getStatusCode(), $status);
 
@@ -77,6 +81,10 @@ class ErrorResponderTest extends \PHPUnit\Framework\TestCase
      */
     public function testExceptions($thingy, $sut )
     {
+        $this->expectException(ResponderExceptionInterface::class);
+        $this->expectException(ResponderInvalidArgumentException::class);
+        $sut( $thingy );
+
         $this->expectException(ResponderExceptionInterface::class);
         $this->expectException(ResponderInvalidArgumentException::class);
         $sut->createResponse( $thingy );

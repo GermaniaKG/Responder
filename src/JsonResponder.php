@@ -67,7 +67,7 @@ class JsonResponder implements ResponderInterface
     /**
      * @inheritDoc
      */
-    public function __invoke( $thingy, int $status = 500 ) : ResponseInterface
+    public function __invoke( $thingy, int $status = 200 ) : ResponseInterface
     {
         return $this->createResponse( $thingy, $status);
     }

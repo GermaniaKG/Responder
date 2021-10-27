@@ -32,8 +32,13 @@ class NoContentResponderTest extends \PHPUnit\Framework\TestCase
     public function testResponseCreation($thingy, $status, $sut )
     {
         $sut->setResponseFactory( new Nyholm\Psr7\Factory\Psr17Factory);
-        $response = $sut->createResponse( $thingy, $status );
 
+        $response = $sut->createResponse( $thingy, $status );
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEmpty($response->getBody()->__toString());
+        $this->assertEquals($response->getStatusCode(), $status);
+
+        $response = $sut( $thingy, $status );
         $this->assertInstanceOf(ResponseInterface::class, $response);
         $this->assertEmpty($response->getBody()->__toString());
         $this->assertEquals($response->getStatusCode(), $status);
